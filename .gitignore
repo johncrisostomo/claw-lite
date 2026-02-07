@@ -45,3 +45,12 @@ Thumbs.db
 # ---- Test / coverage ----
 coverage/
 .nyc_output/
+
+# Ignore all workspaces...
+/workspaces/*
+
+# ...but keep the default workspace folder and its contents
+!/workspaces/default/
+/workspaces/default/*
+!/workspaces/default/**
+
