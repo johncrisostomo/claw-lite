@@ -11,7 +11,7 @@ function uid() {
 async function loadWorkspaceMessages(agentId: string): Promise<OllamaMessage[]> {
     const workspaceDir = path.join(process.cwd(), 'workspaces', agentId)
     const [soul, tools] = await Promise.all([
-        readFile(path.join(workspaceDir, 'SOULS.md'), 'utf8'),
+        readFile(path.join(workspaceDir, 'SOUL.md'), 'utf8'),
         readFile(path.join(workspaceDir, 'TOOLS.md'), 'utf8')
     ])
 
@@ -24,9 +24,11 @@ async function loadWorkspaceMessages(agentId: string): Promise<OllamaMessage[]> 
 export async function runTurn(opts: {
     sessionId: string
     userText: string
+    agentId?: string
     model?: string
     ollamaHost?: string
 }) {
+    const agentId = opts.agentId ?? 'default'
     const model = opts.model ?? 'qwen3:8b'
     const host = (opts.ollamaHost ?? 'http://localhost:11434').replace(/\/$/, '')
 
@@ -41,7 +43,9 @@ export async function runTurn(opts: {
     await appendEvent(opts.sessionId, userEv)
 
     const events = [...prior, userEv]
-    const messages: OllamaMessage[] = events.map((e) => ({ role: e.role, content: e.content}))
+    const workspaceMsgs = await loadWorkspaceMessages(agentId)
+    const historyMsgs: OllamaMessage[] = events.map((e) => ({ role: e.role, content: e.content }))
+    const messages: OllamaMessage[] = [...workspaceMsgs, ...historyMsgs]
 
     const resp = await fetch(`${host}/api/chat`, {
         method: 'POST',
