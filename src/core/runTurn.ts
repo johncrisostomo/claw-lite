@@ -1,9 +1,24 @@
 import { appendEvent, readEvents, type SessionEvent } from './sessionStore.js'
+import { readFile } from 'node:fs/promises'
+import * as path from 'node:path'
 
 type OllamaMessage = { role: 'system' | 'user' | 'assistant'; content: string }
 
 function uid() {
     return `${Date.now()}-${Math.random().toString(16).slice(2)}`
+}
+
+async function loadWorkspaceMessages(agentId: string): Promise<OllamaMessage[]> {
+    const workspaceDir = path.join(process.cwd(), 'workspaces', agentId)
+    const [soul, tools] = await Promise.all([
+        readFile(path.join(workspaceDir, 'SOULS.md'), 'utf8'),
+        readFile(path.join(workspaceDir, 'TOOLS.md'), 'utf8')
+    ])
+
+    return [
+        { role: 'system', content: soul },
+        { role: 'system', content: tools}
+    ]
 }
 
 export async function runTurn(opts: {
