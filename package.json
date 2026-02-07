@@ -1,0 +1,20 @@
+{
+  "name": "claw-lite",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:server": "tsx src/server.ts",
+    "chat": "tsx src/cli.ts",
+    "build": "tsc -p tsconfig.json",
+    "start:server": "node dist/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
