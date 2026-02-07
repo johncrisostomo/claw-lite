@@ -8,8 +8,9 @@ if (!userText) {
 }
 
 const sessionId = process.env.SESSION_ID ?? 'main'
-const model = process.env.OLLAMA_MODEL ?? 'qwen3:8b'
+const agentId = process.env.AGENT_ID ?? 'default'
+const model = process.env.OLLAMA_MODEL ?? 'gpt-oss:20b'
 const ollamaHost = process.env.OLLAMA_HOST ?? 'http://localhost:11434'
 
-const { assistantText } = await runTurn({ sessionId, userText, model, ollamaHost })
+const { assistantText } = await runTurn({ sessionId, userText, agentId, model, ollamaHost })
 process.stdout.write(assistantText + '\n')

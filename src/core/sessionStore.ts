@@ -8,6 +8,9 @@ export type SessionEvent = {
     ts: string
     role: Role
     content: string
+    type?: 'message' | 'toolCall' | 'toolResult'
+    tool?: { name: string; args: unknown }
+    toolResult?: { ok: boolean; result?: unknown; error?: string }
 }
 
 export async function ensureDir(dir: string) {

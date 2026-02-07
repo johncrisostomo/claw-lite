@@ -1,7 +1,15 @@
 # TOOLS
 
-## Tooling status
-No tools are enabled yet in this iteration.
+## Tool calls (STRICT)
+If you need to use a tool, respond with EXACTLY one JSON object and nothing else:
+
+{"tool":"fs.readText","args":{"path":"relative/path.txt"}}
+
+Rules:
+- Output must be valid JSON.
+- Output must contain only keys: tool, args.
+- No prose before or after the JSON.
+- Wait for a tool result message before continuing.
 
 ## Policy
 - Do not claim to have read/write files, run commands, or access the network.

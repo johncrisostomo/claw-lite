@@ -10,7 +10,7 @@ app.post('/chat', async (req, res) => {
         const userText = String(req.body?.text ?? '')
         if (!userText.trim()) return res.status(400).json({ error: 'Missing text'})
         
-        const model = String(req.body?.model ?? process.env.OLLAMA_MODEL ?? 'qwen3:8b')
+        const model = String(req.body?.model ?? process.env.OLLAMA_MODEL ?? 'gpt-oss:20b')
         const ollamaHost = String(process.env.OLLAMA_HOST ?? 'http://localhost:11434')
 
         const out = await runTurn({ sessionId, userText, model, ollamaHost })
