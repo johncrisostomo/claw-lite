@@ -54,3 +54,9 @@ coverage/
 /workspaces/default/*
 !/workspaces/default/**
 
+# WhatsApp auth and experimental stuff
+workspaces/**/.wa-auth/
+workspaces/**/inbox/whatsapp/
+workspaces/**/food_log.jsonl
+
+
